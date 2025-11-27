@@ -1,7 +1,7 @@
 #include "Level.h"
 #include <string>
 #include "Utils.h"
-#include "monsters/Monster.h"
+//#include "monsters/Monster.h"
 #include "data/DataCenter.h"
 #include <allegro5/allegro_primitives.h>
 #include "shapes/Point.h"
@@ -17,7 +17,7 @@ namespace LevelSetting {
 	constexpr array<int, 4> grid_size = {
 		40, 40, 40, 40
 	};
-	constexpr int monster_spawn_rate = 90;
+	//constexpr int monster_spawn_rate = 90;
 };
 
 void
@@ -25,7 +25,7 @@ Level::init() {
 	level = -1;
 	grid_w = -1;
 	grid_h = -1;
-	monster_spawn_counter = 0;
+	//monster_spawn_counter = 0;
 }
 
 /**
@@ -49,16 +49,17 @@ Level::load_level(int lvl) {
 	level = lvl;
 	grid_w = DC->game_field_length / LevelSetting::grid_size[lvl];
 	grid_h = DC->game_field_length / LevelSetting::grid_size[lvl];
-	num_of_monsters.clear();
+	//num_of_monsters.clear();
 	road_path.clear();
 
 	int num;
 	// read total number of monsters & number of each monsters
 	fscanf(f, "%d", &num);
-	for(size_t i = 0; i < static_cast<size_t>(MonsterType::MONSTERTYPE_MAX); ++i) {
+
+	/*for(size_t i = 0; i < static_cast<size_t>(MonsterType::MONSTERTYPE_MAX); ++i) {
 		fscanf(f, "%d", &num);
-		num_of_monsters.emplace_back(num);
-	}
+		//num_of_monsters.emplace_back(num);
+	}*/
 
 	// read road path
 	while(fscanf(f, "%d", &num) != EOF) {
@@ -74,19 +75,19 @@ Level::load_level(int lvl) {
 */
 void
 Level::update() {
-	if(monster_spawn_counter) {
+	/*if(monster_spawn_counter) {
 		monster_spawn_counter--;
 		return;
-	}
+	}*/
 	DataCenter *DC = DataCenter::get_instance();
 
-	for(size_t i = 0; i < num_of_monsters.size(); ++i) {
+	/*for(size_t i = 0; i < num_of_monsters.size(); ++i) {
 		if(num_of_monsters[i] == 0) continue;
 		DC->monsters.emplace_back(Monster::create_monster(static_cast<MonsterType>(i), DC->level->get_road_path()));
 		num_of_monsters[i]--;
 		break;
 	}
-	monster_spawn_counter = LevelSetting::monster_spawn_rate;
+	monster_spawn_counter = LevelSetting::monster_spawn_rate;*/
 }
 
 void

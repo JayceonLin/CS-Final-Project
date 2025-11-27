@@ -9,7 +9,7 @@
 
 class Player;
 class Level;
-class Monster;
+//class Monster;
 class Tower;
 class Bullet;
 
@@ -81,7 +81,7 @@ public:
 	 * @brief Raw list of Monster objects.
 	 * @see Monster
 	 */
-	std::vector<Monster*> monsters;
+	/*std::vector<Monster*> monsters;
 	/**
 	 * @brief Raw list of Tower objects.
 	 * @see Tower

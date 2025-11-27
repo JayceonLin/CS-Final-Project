@@ -23,11 +23,11 @@ public:
 	Rectangle grid_to_region(const Point &grid) const;
 	const std::vector<Point> &get_road_path() const
 	{ return road_path; }
-	int remain_monsters() const {
+	/*int remain_monsters() const {
 		int res = 0;
 		for(const int &i : num_of_monsters) res += i;
 		return res;
-	}
+	}*/
 private:
 	/**
 	 * @brief Stores the monster's attack route, whose Point is represented in grid format.
@@ -48,11 +48,11 @@ private:
 	/**
 	 * @brief Time remaining for the next monster to spawn.
 	 */
-	int monster_spawn_counter;
+	//int monster_spawn_counter;
 	/**
 	 * @brief Number of each different type of monsters.
 	 */
-	std::vector<int> num_of_monsters;
+	//std::vector<int> num_of_monsters;
 };
 
 #endif
