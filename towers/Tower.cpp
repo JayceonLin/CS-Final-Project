@@ -58,6 +58,7 @@ Tower::Tower(const Point &p, double attack_range, int attack_freq, TowerType typ
 	bitmap = IC->get(TowerSetting::tower_full_img_path[static_cast<int>(type)]);
 }
 
+
 /**
  * @brief Update attack cooldown and detect if the tower could make an attack.
  * @see Tower::attack(Object *target)
@@ -82,7 +83,7 @@ Tower::attack(Object *target) {
 	if(!target->shape->overlap(*shape)) return false;
 	DataCenter *DC = DataCenter::get_instance();
 	SoundCenter *SC = SoundCenter::get_instance();
-	DC->towerBullets.emplace_back(create_bullet(target));
+	//DC->towerBullets.emplace_back(create_bullet(target));
 	SC->play(TowerSetting::attack_sound_path, ALLEGRO_PLAYMODE_ONCE);
 	counter = attack_freq;
 	return true;
@@ -99,7 +100,7 @@ Tower::draw() {
 /**
  * @brief Get the area of the tower, and return with a Rectangle object.
 */
-Rectangle
+/*Rectangle
 Tower::get_region() const {
 	int w = al_get_bitmap_width(bitmap);
 	int h = al_get_bitmap_height(bitmap);
@@ -109,4 +110,4 @@ Tower::get_region() const {
 		shape->center_x() - w/2 + w,
 		shape->center_y() - h/2 + h
 	};
-}
+}*/

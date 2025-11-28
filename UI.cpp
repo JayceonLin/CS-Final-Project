@@ -9,7 +9,7 @@
 #include "shapes/Point.h"
 #include "shapes/Rectangle.h"
 #include "Player.h"
-#include "towers/Tower.h"
+//#include "towers/Tower.h"
 #include "Level.h"
 
 // fixed settings
@@ -27,7 +27,7 @@ UI::init() {
 	int tl_y = tower_img_top_padding;
 	int max_height = 0;
 	// arrange tower shop
-	for(size_t i = 0; i < (size_t)(TowerType::TOWERTYPE_MAX); ++i) {
+	/*for(size_t i = 0; i < (size_t)(TowerType::TOWERTYPE_MAX); ++i) {
 		ALLEGRO_BITMAP *bitmap = IC->get(TowerSetting::tower_menu_img_path[i]);
 		int w = al_get_bitmap_width(bitmap);
 		int h = al_get_bitmap_height(bitmap);
@@ -39,7 +39,7 @@ UI::init() {
 		tower_items.emplace_back(bitmap, Point{tl_x, tl_y}, TowerSetting::tower_price[i]);
 		tl_x += w + tower_img_left_padding;
 		max_height = std::max(max_height, h);
-	}
+	}*/
 	debug_log("<UI> state: change to HALT\n");
 	state = STATE::HALT;
 	on_item = -1;
@@ -50,7 +50,7 @@ UI::update() {
 	DataCenter *DC = DataCenter::get_instance();
 	const Point &mouse = DC->mouse;
 
-	switch(state) {
+	/*switch(state) {
 		case STATE::HALT: {
 			for(size_t i = 0; i < tower_items.size(); ++i) {
 				auto &[bitmap, p, price] = tower_items[i];
@@ -122,7 +122,7 @@ UI::update() {
 			state = STATE::HALT;
 			break;
 		}
-	}
+	}*/
 }
 
 void
@@ -144,7 +144,7 @@ UI::draw() {
 		game_field_length+love_img_padding, love_img_padding,
 		ALLEGRO_ALIGN_LEFT, "coin: %5d", player_coin);
 	// draw tower shop items
-	for(auto &[bitmap, p, price] : tower_items) {
+	/*for(auto &[bitmap, p, price] : tower_items) {
 		int w = al_get_bitmap_width(bitmap);
 		int h = al_get_bitmap_height(bitmap);
 		al_draw_bitmap(bitmap, p.x, p.y, 0);
@@ -156,9 +156,9 @@ UI::draw() {
 			FC->courier_new[FontSize::MEDIUM], al_map_rgb(0, 0, 0),
 			p.x + w / 2, p.y + h,
 			ALLEGRO_ALIGN_CENTRE, "%d", price);
-	}
+	}*/
 
-	switch(state) {
+	/*switch(state) {
 		static Tower *selected_tower = nullptr;
 		case STATE::HALT: {
 			// No tower should be selected for HALT state.
@@ -193,5 +193,5 @@ UI::draw() {
 			al_draw_bitmap(bitmap, mouse.x - w / 2, mouse.y - h / 2, 0);
 			break;
 		}
-	}
+	}*/
 }

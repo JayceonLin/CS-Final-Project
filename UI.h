@@ -23,7 +23,7 @@ private:
 	STATE state;
 	ALLEGRO_BITMAP *love;
 	// tower menu bitmap, (top-left x, top-left y), price
-	std::vector<std::tuple<ALLEGRO_BITMAP*, Point, int>> tower_items;
+	//std::vector<std::tuple<ALLEGRO_BITMAP*, Point, int>> tower_items;
 	int on_item;
 };
 
