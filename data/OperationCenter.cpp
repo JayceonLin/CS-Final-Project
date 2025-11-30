@@ -1,14 +1,21 @@
 #include "OperationCenter.h"
 #include "DataCenter.h"
 #include "../object/bed.h"
+#include "../object/candle.h"
+#include "../object/closet.h"
+#include "../object/door.h"
 //#include "../monsters/Monster.h"
 //#include "../towers/Tower.h"
 //#include "../towers/Bullet.h"
 #include "../Player.h"
 
+
+//這邊主要用來統一更新遊戲內物件互動的function
 void OperationCenter::update() {
 	_update_character_bed();
-
+	_update_candle_character();
+	_update_closet_character();
+	_update_door_character();
 	// Update monsters.
 	//_update_monster();
 	// Update towers.
@@ -24,6 +31,21 @@ void OperationCenter::_update_character_bed() {
 	DataCenter *DC = DataCenter::get_instance();
 	Bed* bed=DC->bed;
 	bed->interact();
+}
+void OperationCenter::_update_candle_character() {
+	DataCenter *DC = DataCenter::get_instance();
+	Candle* candle=DC->candle;
+	candle->interact();
+}
+void OperationCenter::_update_closet_character() {
+	DataCenter *DC = DataCenter::get_instance();
+	Closet* closet=DC->closet;
+	closet->interact();
+}
+void OperationCenter::_update_door_character() {
+	DataCenter *DC = DataCenter::get_instance();
+	Door* door=DC->door;
+	door->interact();
 }
 /*void OperationCenter::_update_monster() {
 	std::vector<Monster*> &monsters = DataCenter::get_instance()->monsters;

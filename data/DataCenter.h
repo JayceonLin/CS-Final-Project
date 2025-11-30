@@ -7,9 +7,16 @@
 #include <allegro5/mouse.h>
 #include "../shapes/Point.h"
 
+
+//這邊是先前置宣告
 class Player;
 class Character;
 class Bed;
+class Floor;
+class Candle;
+class Closet;
+class Door;
+
 //class Monster;
 //class Tower;
 //class Bullet;
@@ -84,8 +91,14 @@ public:
 	//std::vector<Bullet*> towerBullets;
 
 
+	//遊戲中的物件指標預先建立
 	Character *character;
 	Bed *bed;
+	Floor *floor;
+	Candle *candle;
+	Closet *closet;
+	Door *door;
+	
 private:
 	DataCenter();
 };

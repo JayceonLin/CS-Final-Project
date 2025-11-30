@@ -29,8 +29,14 @@ private:
 	//void _update_tower();
 	//void _update_towerBullet();
 	//void _update_monster_towerBullet();
+
+	
+	//互動用的function
 	void _update_monster_player();
 	void _update_character_bed();
+	void _update_candle_character();
+	void _update_closet_character();
+	void _update_door_character();
 private:
 	//void _draw_monster();
 	//void _draw_tower();

@@ -23,11 +23,18 @@ class Character : public Object
 		void init();
 		void update();
 		void draw() override;
+		void set_movability(bool movable){this->movable=movable;}
 	private:
 		CharacterState state=CharacterState::Front;
+
+		//移動速度
 		double speed=5;
+		//角色圖片路徑
 		std::map<CharacterState,std::string> gitfPath;
+		//角色寬高
 		int w,h;
+		//角色是否可移動
+		bool movable=true;
 };
 
 #endif

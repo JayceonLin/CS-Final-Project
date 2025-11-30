@@ -8,6 +8,10 @@
 #include "Player.h"
 #include "character/Character.h"
 #include "object/bed.h"
+#include "object/candle.h"
+#include "object/closet.h"
+#include "object/door.h"
+#include "object/floor.h"
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
@@ -143,9 +147,14 @@ Game::game_init() {
 	start_screen = new StartScreen();
 	start_screen->init();
 
-	DC->character->init();
-	DC->bed->init();
 
+	//object init
+	DC->character->init();
+	DC->floor->init(190, 10,DC->window_width - 150, DC->window_height - 10);
+	DC->bed->init();
+	DC->candle->init();
+	DC->closet->init();
+	DC->door->init();
 	// game start
 	background = IC->get(background_img_path);
 	debug_log("Game state: change to START\n");
@@ -173,6 +182,8 @@ Game::game_update() {
 			if(start_screen->isStarted()) {
 				debug_log("<Game> state: change to Main\n");
 				state = STATE::Main;
+				DC->bed->reset_bed_world();
+				DC->closet->reset_closet_world();
 			}
 			break;
 		} case STATE::Main: {
@@ -187,13 +198,29 @@ Game::game_update() {
 				debug_log("<Game> state: change to PAUSE\n");
 				state = STATE::PAUSE;
 			}
-			/*if(DC->level->remain_monsters() == 0 && DC->monsters.size() == 0) {
-				debug_log("<Game> state: change to END\n");
-				state = STATE::END;
-			}*/
 			if(DC->player->HP == 0) {
 				debug_log("<Game> state: change to END\n");
 				state = STATE::END;
+			}
+			if(DC->bed->bed_world())
+			{
+			    // 回到初始畫面
+			    debug_log("<Game> state: change to START\n");
+			    state = STATE::START;
+				start_screen->reset();
+			}
+			if(DC->closet->closet_world())
+			{
+			    // 回到初始畫面
+			    debug_log("<Game> state: change to START\n");
+			    state = STATE::START;
+				start_screen->reset();
+			}
+			if(DC->door->door_world())
+			{
+			    // 結束遊戲
+			    debug_log("<Game> state: change to END\n");
+			    state = STATE::END;
 			}
 			break;
 		} case STATE::PAUSE: {
@@ -251,6 +278,9 @@ Game::game_draw() {
 		if(state != STATE::START) {
 			DC->character->draw();
 			DC->bed->draw();
+			DC->candle->draw();
+			DC->closet->draw();
+			DC->door->draw();
 			ui->draw();
 			OC->draw();
 		}
@@ -261,6 +291,8 @@ Game::game_draw() {
 				start_screen->draw();
 			break;
 		} case STATE::Main: {
+			if(!DC->candle->candle_lighted())
+				al_draw_filled_rectangle(0, 0, DC->window_width, DC->window_height, al_map_rgba(0, 0, 0, 180));
 			break;
 		} case STATE::PAUSE: {
 			// game layout cover
