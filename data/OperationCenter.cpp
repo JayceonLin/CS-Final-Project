@@ -1,11 +1,14 @@
 #include "OperationCenter.h"
 #include "DataCenter.h"
+#include "../object/bed.h"
 //#include "../monsters/Monster.h"
 //#include "../towers/Tower.h"
 //#include "../towers/Bullet.h"
 #include "../Player.h"
 
 void OperationCenter::update() {
+	_update_character_bed();
+
 	// Update monsters.
 	//_update_monster();
 	// Update towers.
@@ -17,7 +20,11 @@ void OperationCenter::update() {
 	// If any monster reaches the end, hurt the player and delete the monster.
 	//_update_monster_player();
 }
-
+void OperationCenter::_update_character_bed() {
+	DataCenter *DC = DataCenter::get_instance();
+	Bed* bed=DC->bed;
+	bed->interact();
+}
 /*void OperationCenter::_update_monster() {
 	std::vector<Monster*> &monsters = DataCenter::get_instance()->monsters;
 	for(Monster *monster : monsters)

@@ -47,14 +47,14 @@ Level::load_level(int lvl) {
 	FILE *f = fopen(buffer, "r");
 	GAME_ASSERT(f != nullptr, "cannot find level.");
 	level = lvl;
-	grid_w = DC->game_field_length / LevelSetting::grid_size[lvl];
-	grid_h = DC->game_field_length / LevelSetting::grid_size[lvl];
+	grid_w = DC->window_width / LevelSetting::grid_size[lvl];
+	grid_h = DC->window_width / LevelSetting::grid_size[lvl];
 	//num_of_monsters.clear();
 	road_path.clear();
 
 	int num;
 	// read total number of monsters & number of each monsters
-	fscanf(f, "%d", &num);
+	//fscanf(f, "%d", &num);
 
 	/*for(size_t i = 0; i < static_cast<size_t>(MonsterType::MONSTERTYPE_MAX); ++i) {
 		fscanf(f, "%d", &num);
@@ -93,23 +93,23 @@ Level::update() {
 void
 Level::draw() {
 	if(level == -1) return;
-	for(auto &[i, j] : road_path) {
+	/*for(auto &[i, j] : road_path) {
 		int x1 = i * LevelSetting::grid_size[level];
 		int y1 = j * LevelSetting::grid_size[level];
 		int x2 = x1 + LevelSetting::grid_size[level];
 		int y2 = y1 + LevelSetting::grid_size[level];
 		al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(255, 244, 173));
-	}
+	}*/
 }
 
-bool
+/*bool
 Level::is_onroad(const Rectangle &region) {
 	for(const Point &grid : road_path) {
 		if(grid_to_region(grid).overlap(region))
 			return true;
 	}
 	return false;
-}
+}*/
 
 Rectangle
 Level::grid_to_region(const Point &grid) const {

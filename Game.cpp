@@ -6,7 +6,8 @@
 #include "data/ImageCenter.h"
 #include "data/FontCenter.h"
 #include "Player.h"
-#include "Level.h"
+#include "character/Character.h"
+#include "object/bed.h"
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
@@ -18,7 +19,7 @@
 // fixed settings
 constexpr char game_icon_img_path[] = "./assets/image/game_icon.png";
 constexpr char game_start_sound_path[] = "./assets/sound/growl.wav";
-constexpr char background_img_path[] = "./assets/image/gamebackground.png";
+constexpr char background_img_path[] = "./assets/image/background.png";
 constexpr char background_sound_path[] = "./assets/sound/BackgroundMusic.ogg";
 
 /**
@@ -138,7 +139,12 @@ Game::game_init() {
 	ui = new UI();
 	ui->init();
 
-	DC->level->init();
+	// init start screen
+	start_screen = new StartScreen();
+	start_screen->init();
+
+	DC->character->init();
+	DC->bed->init();
 
 	// game start
 	background = IC->get(background_img_path);
@@ -162,20 +168,14 @@ Game::game_update() {
 
 	switch(state) {
 		case STATE::START: {
-			static bool is_played = false;
-			static ALLEGRO_SAMPLE_INSTANCE *instance = nullptr;
-			if(!is_played) {
-				instance = SC->play(game_start_sound_path, ALLEGRO_PLAYMODE_ONCE);
-				DC->level->load_level(1);
-				is_played = true;
-			}
-
-			if(!SC->is_playing(instance)) {
-				debug_log("<Game> state: change to LEVEL\n");
-				state = STATE::LEVEL;
+			if(start_screen)
+				start_screen->update();
+			if(start_screen->isStarted()) {
+				debug_log("<Game> state: change to Main\n");
+				state = STATE::Main;
 			}
 			break;
-		} case STATE::LEVEL: {
+		} case STATE::Main: {
 			static bool BGM_played = false;
 			if(!BGM_played) {
 				background = SC->play(background_sound_path, ALLEGRO_PLAYMODE_LOOP);
@@ -199,8 +199,8 @@ Game::game_update() {
 		} case STATE::PAUSE: {
 			if(DC->key_state[ALLEGRO_KEY_P] && !DC->prev_key_state[ALLEGRO_KEY_P]) {
 				SC->toggle_playing(background);
-				debug_log("<Game> state: change to LEVEL\n");
-				state = STATE::LEVEL;
+				debug_log("<Game> state: change to Main\n");
+				state = STATE::Main;
 			}
 			break;
 		} case STATE::END: {
@@ -213,7 +213,7 @@ Game::game_update() {
 		SC->update();
 		ui->update();
 		if(state != STATE::START) {
-			DC->level->update();
+			DC->character->update();
 			OC->update();
 		}
 	}
@@ -237,7 +237,7 @@ Game::game_draw() {
 	if(state != STATE::END) {
 		// background
 		al_draw_bitmap(background, 0, 0, 0);
-		if(DC->game_field_length < DC->window_width)
+		/*if(DC->game_field_length < DC->window_width)
 			al_draw_filled_rectangle(
 				DC->game_field_length, 0,
 				DC->window_width, DC->window_height,
@@ -246,17 +246,21 @@ Game::game_draw() {
 			al_draw_filled_rectangle(
 				0, DC->game_field_length,
 				DC->window_width, DC->window_height,
-				al_map_rgb(100, 100, 100));
+				al_map_rgb(100, 100, 100));*/
 		// user interface
 		if(state != STATE::START) {
-			DC->level->draw();
+			DC->character->draw();
+			DC->bed->draw();
 			ui->draw();
 			OC->draw();
 		}
 	}
 	switch(state) {
 		case STATE::START: {
-		} case STATE::LEVEL: {
+			if(start_screen)
+				start_screen->draw();
+			break;
+		} case STATE::Main: {
 			break;
 		} case STATE::PAUSE: {
 			// game layout cover

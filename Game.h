@@ -3,6 +3,7 @@
 
 #include <allegro5/allegro.h>
 #include "UI.h"
+#include "scene/Start.h"
 
 /**
  * @brief Main class that runs the whole game.
@@ -24,9 +25,9 @@ private:
 	 * @see Game::game_update()
 	 */
 	enum class STATE {
-		START, // -> LEVEL
-		LEVEL, // -> PAUSE, END
-		PAUSE, // -> LEVEL
+		START, // -> Main
+		Main,  // -> START, PAUSE
+		PAUSE, // -> Main
 		END
 	};
 	STATE state;
@@ -38,6 +39,7 @@ private:
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_EVENT_QUEUE *event_queue;
 	UI *ui;
+	StartScreen* start_screen;
 };
 
 #endif

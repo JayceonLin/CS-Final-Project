@@ -8,7 +8,8 @@
 #include "../shapes/Point.h"
 
 class Player;
-class Level;
+class Character;
+class Bed;
 //class Monster;
 //class Tower;
 //class Bullet;
@@ -33,12 +34,6 @@ public:
 	/**
 	 * @brief The width and height of game area (not window size). That is, the region excludes menu region.
 	 * @details The game area is sticked to the top-left of the display window.
-	 */
-	int game_field_length;
-	/**
-	 * @brief Stores the keyboard state whether a key is being pressed.
-	 * @details The states will be updated once a key is pressed, asynchronously with frame update.
-	 * @see Game::execute()
 	 */
 	bool key_state[ALLEGRO_KEY_MAX];
 	/**
@@ -73,11 +68,6 @@ public:
 	 */
 	Player *player;
 	/**
-	 * @brief Loads and stores the information of a level.
-	 * @see Level
-	 */
-	Level *level;
-	/**
 	 * @brief Raw list of Monster objects.
 	 * @see Monster
 	 */
@@ -92,6 +82,10 @@ public:
 	 * @see Bullet
 	 */
 	//std::vector<Bullet*> towerBullets;
+
+
+	Character *character;
+	Bed *bed;
 private:
 	DataCenter();
 };

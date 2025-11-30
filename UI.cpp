@@ -10,7 +10,6 @@
 #include "shapes/Rectangle.h"
 #include "Player.h"
 //#include "towers/Tower.h"
-#include "Level.h"
 
 // fixed settings
 constexpr char love_img_path[] = "./assets/image/love.png";
@@ -23,7 +22,7 @@ UI::init() {
 	DataCenter *DC = DataCenter::get_instance();
 	ImageCenter *IC = ImageCenter::get_instance();
 	love = IC->get(love_img_path);
-	int tl_x = DC->game_field_length + tower_img_left_padding;
+	int tl_x = DC->window_width-tower_img_left_padding;
 	int tl_y = tower_img_top_padding;
 	int max_height = 0;
 	// arrange tower shop
@@ -131,7 +130,7 @@ UI::draw() {
 	FontCenter *FC = FontCenter::get_instance();
 	const Point &mouse = DC->mouse;
 	// draw HP
-	const int &game_field_length = DC->game_field_length;
+	const int &game_field_length= DC->window_width-200;
 	const int &player_HP = DC->player->HP;
 	int love_width = al_get_bitmap_width(love);
 	for(int i = 1; i <= player_HP; ++i) {
